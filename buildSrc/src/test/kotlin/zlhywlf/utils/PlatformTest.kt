@@ -33,6 +33,9 @@ class PlatformTest {
                 Arguments.of("windows", OsType.WINDOWS),
                 Arguments.of("mac", OsType.MAC),
                 Arguments.of("linux", OsType.LINUX),
+                Arguments.of("freebsd", OsType.FREEBSD),
+                Arguments.of("sunos", OsType.SUN),
+                Arguments.of("aix", OsType.AIX),
             )
         }
     }
