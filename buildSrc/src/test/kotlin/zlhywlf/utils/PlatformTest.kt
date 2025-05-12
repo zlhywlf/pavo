@@ -8,7 +8,6 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
 class PlatformTest {
-
     @ParameterizedTest
     @MethodSource("platformData")
     internal fun parseOsTypeTest(key: String, ex: OsType) {
@@ -39,5 +38,4 @@ class PlatformTest {
             )
         }
     }
-
 }

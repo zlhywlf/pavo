@@ -1,13 +1,8 @@
 package zlhywlf.plugins
 
-import zlhywlf.node.NodeExtension
-import zlhywlf.node.configureNodeExtension
+import zlhywlf.plugins.node.NodeExtension
+import zlhywlf.plugins.node.configureNodeExtension
 
 
-val groupName = "jupiter.node"
-val nodeExtension: NodeExtension = project.extensions.create<NodeExtension>(NodeExtension.NAME, project)
-
-tasks.register("build") {
-    group = groupName
-    configureNodeExtension(project, nodeExtension)
-}
+val nodeExtension: NodeExtension = NodeExtension.create(project)
+configureNodeExtension(project, nodeExtension)

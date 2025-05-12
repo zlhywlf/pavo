@@ -1,7 +1,8 @@
-package zlhywlf.node
+package zlhywlf.plugins.node
 
 import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
+import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.property
 import zlhywlf.utils.Platform
 import zlhywlf.utils.parsePlatform
@@ -19,6 +20,11 @@ open class NodeExtension(project: Project) {
         const val NAME = "nodePlugin"
         const val DEFAULT_NODE_VERSION = "24.0.1"
         const val DEFAULT_NODE_DIST_URL = "https://nodejs.org/dist"
+
+        @JvmStatic
+        fun create(project: Project): NodeExtension {
+            return project.extensions.create<NodeExtension>(NAME, project)
+        }
     }
 }
 
