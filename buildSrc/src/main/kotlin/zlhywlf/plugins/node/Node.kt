@@ -3,7 +3,9 @@ package zlhywlf.plugins.node
 import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.kotlin.dsl.create
+import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.property
+import org.gradle.kotlin.dsl.register
 import zlhywlf.utils.Platform
 import zlhywlf.utils.parsePlatform
 import zlhywlf.utils.zip
@@ -15,15 +17,21 @@ open class NodeExtension(project: Project) {
     val workDir: DirectoryProperty = project.objects.directoryProperty().convention(cacheDir.dir("nodejs"))
     val version = project.objects.property<String>().convention(DEFAULT_NODE_VERSION)
     val distBaseUrl = project.objects.property<String>().convention(DEFAULT_NODE_DIST_URL)
+    val download = project.objects.property<Boolean>().convention(false)
 
     companion object {
-        const val NAME = "nodePlugin"
+        private const val NAME = "nodePlugin"
         const val DEFAULT_NODE_VERSION = "24.0.1"
         const val DEFAULT_NODE_DIST_URL = "https://nodejs.org/dist"
 
         @JvmStatic
         fun create(project: Project): NodeExtension {
             return project.extensions.create<NodeExtension>(NAME, project)
+        }
+
+        @JvmStatic
+        operator fun get(project: Project): NodeExtension {
+            return project.extensions.getByType()
         }
     }
 }
@@ -39,4 +47,8 @@ internal fun configureNodeExtension(project: Project, extension: NodeExtension) 
         set(nodeDir)
         finalizeValueOnRead()
     }
+}
+
+internal fun addTasks(project: Project) {
+    project.tasks.register<NodeSetupTask>(NodeSetupTask.NAME)
 }

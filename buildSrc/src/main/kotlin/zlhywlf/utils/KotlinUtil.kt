@@ -1,6 +1,15 @@
 package zlhywlf.utils
 
+import org.gradle.api.Action
+import org.gradle.api.file.*
+import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Provider
+import org.gradle.api.tasks.WorkResult
+import org.gradle.process.ExecOperations
+import org.gradle.process.ExecResult
+import org.gradle.process.ExecSpec
+import java.io.File
+import javax.inject.Inject
 
 internal data class Tuple4<A, B, C, D>(
     val first: A,
@@ -60,4 +69,36 @@ internal fun <A, B, C, D, E> zip(
                 pairs.second.third
             )
         }
+}
+
+open class GradleHelper @Inject constructor(
+    private val factory: ObjectFactory,
+    private val execOperations: ExecOperations,
+    private val fileSystemOperations: FileSystemOperations,
+    private val archiveOperations: ArchiveOperations
+) {
+
+    fun fileTree(directory: Directory): ConfigurableFileTree {
+        return factory.fileTree().from(directory)
+    }
+
+    fun zipTree(tarPath: File): FileTree {
+        return archiveOperations.zipTree(tarPath)
+    }
+
+    fun tarTree(tarPath: File): FileTree {
+        return archiveOperations.tarTree(tarPath)
+    }
+
+    fun copy(action: Action<CopySpec>): WorkResult {
+        return fileSystemOperations.copy(action)
+    }
+
+    fun delete(action: Action<DeleteSpec>): WorkResult {
+        return fileSystemOperations.delete(action)
+    }
+
+    fun exec(action: Action<ExecSpec>): ExecResult {
+        return execOperations.exec(action)
+    }
 }
