@@ -1,18 +1,9 @@
 package zlhywlf.plugins.node
 
 import org.gradle.api.DefaultTask
-import org.gradle.api.file.Directory
-import org.gradle.api.file.DirectoryProperty
-import org.gradle.api.model.ObjectFactory
-import org.gradle.api.provider.Provider
-import org.gradle.api.provider.ProviderFactory
 import org.gradle.api.tasks.*
 import org.gradle.process.ExecResult
-import javax.inject.Inject
 import zlhywlf.utils.GradleHelper
-import java.nio.file.Path
-import java.nio.file.Files
-import java.nio.file.Paths
 
 abstract class BaseTask : DefaultTask() {
     @get:Internal
@@ -24,24 +15,11 @@ abstract class BaseTask : DefaultTask() {
     }
 }
 
-
 abstract class NodeSetupTask : BaseTask() {
     private val nodeExtension = NodeExtension[project]
 
-    @get:Input
-    val download = nodeExtension.download
-
-    @get:Inject
-    abstract val objects: ObjectFactory
-
-    @get:Inject
-    abstract val providers: ProviderFactory
-
-//    @get:InputFile
-//    val nodeArchiveFile = objects.fileProperty()
-
-//    @get:OutputDirectory
-//    abstract val nodeDir: DirectoryProperty
+    @get:InputFile
+    val archiveFile = project.objects.fileProperty()
 
     @get:Internal
     val gradleHelper = project.objects.newInstance(GradleHelper::class.java)
@@ -53,12 +31,21 @@ abstract class NodeSetupTask : BaseTask() {
 
     @TaskAction
     fun exec() {
-        if (download.get()) {
+        gradleHelper.delete {
+            delete(nodeExtension.nodeDir.get().dir("../").asFileTree.matching {
+                include("node-v*/**")
+            })
         }
-        println(download.get())
-        println(objects)
-        println(project.objects)
-        println(project.objects.fileProperty().orNull?.asFile?.name)
+        val af = archiveFile.get().asFile
+        val nodeDir = nodeExtension.nodeDir
+        val nodeBinDir = if (nodeExtension.platform.get().isWindows()) nodeDir else nodeDir.map { it.dir("bin") }
+        val archivePath = nodeBinDir.map { it.dir("../") }
+        if (af.name.endsWith("zip")) {
+            gradleHelper.copy {
+                from(gradleHelper.zipTree(af))
+                into(archivePath)
+            }
+        }
     }
 
     companion object {
