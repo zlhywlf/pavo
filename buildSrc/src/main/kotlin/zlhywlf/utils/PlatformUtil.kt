@@ -14,8 +14,6 @@ internal enum class OsType(val osName: String) {
     WINDOWS("win"),
     MAC("darwin"),
     LINUX("linux"),
-    FREEBSD("linux"),
-    SUN("sunos"),
     AIX("aix"),
 }
 
@@ -25,8 +23,6 @@ internal fun parseOsType(type: String): OsType {
         name.contains("windows") -> OsType.WINDOWS
         name.contains("mac") -> OsType.MAC
         name.contains("linux") -> OsType.LINUX
-        name.contains("freebsd") -> OsType.FREEBSD
-        name.contains("sunos") -> OsType.SUN
         name.contains("aix") -> OsType.AIX
         else -> error("Unsupported OS: $name")
     }
@@ -34,28 +30,20 @@ internal fun parseOsType(type: String): OsType {
 
 internal fun parseOsArch(osType: OsType, arch: String, uname: Callable<String>): String {
     if (osType == OsType.WINDOWS) {
-        return when {
-            arch.startsWith("aarch") || arch.startsWith("arm")
-            -> {
-                val wmiArch = uname.call()
-                return when (wmiArch) {
-                    // https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/ns-sysinfoapi-system_info#members
-                    "9" -> "x64"
-                    "5" -> "arm"
-                    "12" -> "arm64"
-                    "6" -> "IA64"
-                    "0" -> "x86"
-                    "0xffff" -> "Unknown"
-                    else -> error("Unexpected Win32_Processor.Architecture: $arch")
-                }
-            }
-
-            arch.contains("64") -> "x64"
-            else -> "x86"
+        val wmiArch = uname.call()
+        return when (wmiArch) {
+            // https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/ns-sysinfoapi-system_info#members
+            "9" -> "x64"
+            "5" -> "arm"
+            "12" -> "arm64"
+            "6" -> "IA64"
+            "0" -> "x86"
+            "0xffff" -> "Unknown"
+            else -> error("Unexpected Win32_Processor.Architecture: $arch")
         }
     }
     return when {
-        arch == "arm" || arch.startsWith("aarch") -> uname.call()
+        arch.startsWith("arm") || arch.startsWith("aarch") -> uname.call()
             .mapIf({ it == "armv8l" || it == "aarch64" }) { "arm64" }
             .mapIf({ it == "x86_64" }) { "x64" }
 
