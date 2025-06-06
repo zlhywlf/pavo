@@ -24,7 +24,7 @@ open class NodeExtension(project: Project) {
 
         @JvmStatic
         fun create(project: Project): NodeExtension {
-            return project.extensions.create<NodeExtension>(NAME, project)
+            return project.extensions.create(NAME, project)
         }
 
         @JvmStatic
