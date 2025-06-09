@@ -4,6 +4,7 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Internal
+import org.gradle.api.tasks.TaskAction
 
 abstract class BaseTask<E : BaseExtension> : DefaultTask() {
     @get:Internal
@@ -16,6 +17,9 @@ abstract class BaseTask<E : BaseExtension> : DefaultTask() {
     protected val ext: E by lazy {
         initExtension()
     }
+
+    @TaskAction
+    abstract fun exec()
 
     internal abstract fun initExtension(): E
 }

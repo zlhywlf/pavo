@@ -1,7 +1,6 @@
 package zlhywlf.plugins.python
 
 import zlhywlf.plugins.core.SetupTask
-import org.gradle.api.tasks.TaskAction
 import zlhywlf.utils.ExtensionUtil
 
 abstract class PythonSetupTask : SetupTask<PythonExtension>(
@@ -21,12 +20,8 @@ abstract class PythonSetupTask : SetupTask<PythonExtension>(
         const val NAME = "pythonSetup"
     }
 
-    @TaskAction
-    fun exec() {
-        gradleHelper.delete {
-            delete(ext.sdkDir.get())
-        }
-        println(archiveFile.get())
+    override fun exec() {
+        super.exec()
     }
 
     override fun initExtension(): PythonExtension {

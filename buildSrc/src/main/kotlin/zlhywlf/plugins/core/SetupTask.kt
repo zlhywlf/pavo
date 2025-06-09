@@ -50,4 +50,11 @@ abstract class SetupTask<E : BaseExtension>(
         }
         archiveFile.set(project.layout.file(archiveFileProvider))
     }
+
+    override fun exec() {
+        gradleHelper.delete {
+            delete(ext.sdkDir.get())
+        }
+        println(archiveFile.get())
+    }
 }

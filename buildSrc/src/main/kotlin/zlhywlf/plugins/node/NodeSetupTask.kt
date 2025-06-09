@@ -1,6 +1,5 @@
 package zlhywlf.plugins.node
 
-import org.gradle.api.tasks.TaskAction
 import zlhywlf.plugins.core.SetupTask
 import zlhywlf.utils.ExtensionUtil
 
@@ -20,12 +19,8 @@ abstract class NodeSetupTask : SetupTask<NodeExtension>(
         const val NAME = "nodeSetup"
     }
 
-    @TaskAction
-    fun exec() {
-        gradleHelper.delete {
-            delete(ext.sdkDir.get())
-        }
-        println(archiveFile.get())
+    override fun exec() {
+        super.exec()
     }
 
     override fun initExtension(): NodeExtension {
