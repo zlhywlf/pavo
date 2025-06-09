@@ -16,6 +16,7 @@ abstract class BaseExtension protected constructor(project: Project) {
         project.objects.directoryProperty().convention(cacheDir.dir(workDirName))
     }
 
+    val download = project.objects.property<Boolean>().convention(false)
     val version: Property<String> by lazy {
         project.objects.property<String>().convention(defVersion)
     }
