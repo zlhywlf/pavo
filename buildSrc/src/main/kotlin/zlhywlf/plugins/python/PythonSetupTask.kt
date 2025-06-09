@@ -29,7 +29,7 @@ abstract class PythonSetupTask : SetupTask<PythonExtension>(
         println(archiveFile.get())
     }
 
-    override fun getExtension(): PythonExtension {
+    override fun initExtension(): PythonExtension {
         return ExtensionUtil.getOrCreate<PythonExtension>(project)
     }
 }

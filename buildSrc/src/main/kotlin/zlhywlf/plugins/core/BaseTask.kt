@@ -14,9 +14,8 @@ abstract class BaseTask<E : BaseExtension> : DefaultTask() {
 
     @get:Internal
     protected val ext: E by lazy {
-        getExtension()
+        initExtension()
     }
 
-    @Internal
-    internal abstract fun getExtension(): E
+    internal abstract fun initExtension(): E
 }

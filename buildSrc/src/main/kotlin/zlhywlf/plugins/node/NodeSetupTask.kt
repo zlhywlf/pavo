@@ -28,7 +28,7 @@ abstract class NodeSetupTask : SetupTask<NodeExtension>(
         println(archiveFile.get())
     }
 
-    override fun getExtension(): NodeExtension {
+    override fun initExtension(): NodeExtension {
         return ExtensionUtil.getOrCreate<NodeExtension>(project)
     }
 }
