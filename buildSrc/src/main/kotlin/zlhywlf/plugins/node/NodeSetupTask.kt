@@ -1,10 +1,10 @@
 package zlhywlf.plugins.node
 
 import org.gradle.api.tasks.TaskAction
-import zlhywlf.plugins.core.BaseTask
+import zlhywlf.plugins.core.SetupTask
 import zlhywlf.utils.ExtensionUtil
 
-abstract class NodeSetupTask : BaseTask<NodeExtension>(
+abstract class NodeSetupTask : SetupTask<NodeExtension>(
     lambda@{ p -> "${p.osName}-${p.osArch}" },
     "org.nodejs",
     "node",

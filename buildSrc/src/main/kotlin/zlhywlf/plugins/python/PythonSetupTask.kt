@@ -1,11 +1,10 @@
 package zlhywlf.plugins.python
 
-import org.gradle.api.tasks.Internal
-import zlhywlf.plugins.core.BaseTask
+import zlhywlf.plugins.core.SetupTask
 import org.gradle.api.tasks.TaskAction
 import zlhywlf.utils.ExtensionUtil
 
-abstract class PythonSetupTask : BaseTask<PythonExtension>(
+abstract class PythonSetupTask : SetupTask<PythonExtension>(
     lambda@{ _ -> "" },
     "org.python",
     "python",
