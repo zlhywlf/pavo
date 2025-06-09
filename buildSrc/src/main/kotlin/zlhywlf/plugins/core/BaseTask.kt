@@ -6,7 +6,7 @@ import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Internal
 import zlhywlf.models.Platform
 
-abstract class BaseTask<E : BaseExtension> constructor(
+abstract class BaseTask<E : BaseExtension>(
     @get:Internal
     val classifierName: (Platform) -> String,
     @get:Internal
