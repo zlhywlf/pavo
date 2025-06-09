@@ -36,7 +36,7 @@ abstract class BaseTask<E : BaseExtension>(
         }
     }
 
-    protected fun configure() {
+    private fun configure() {
         ext.distUrl.orNull?.let {
             project.repositories.ivy {
                 name = artifactName
