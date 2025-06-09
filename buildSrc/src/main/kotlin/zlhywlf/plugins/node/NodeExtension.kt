@@ -7,8 +7,8 @@ import zlhywlf.utils.ProviderUtil
 class NodeExtension(project: Project) : BaseExtension(project) {
 
     override val defVersion: String = "24.0.1"
-    override val workDirName: String = "https://nodejs.org/dist"
-    override val defDistUrl: String = "nodejs"
+    override val workDirName: String = "nodejs"
+    override val defDistUrl: String = "https://nodejs.org/dist"
 
     init {
         this.sdkDir.set(ProviderUtil.zip(this.platform, this.workDir, this.version).map { (p, w, v) ->
