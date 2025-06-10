@@ -1,5 +1,7 @@
 package zlhywlf.plugins.core
 
+import org.gradle.api.file.RegularFileProperty
+import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Internal
 import zlhywlf.models.Platform
 
@@ -15,6 +17,9 @@ abstract class SetupTask<E : BaseExtension>(
     @get:Internal
     val extName: Pair<String, String>
 ) : BaseTask<E>() {
+
+    @get:InputFile
+    protected val archiveFile: RegularFileProperty = project.objects.fileProperty()
 
     init {
         enabled = ext.download.get()
