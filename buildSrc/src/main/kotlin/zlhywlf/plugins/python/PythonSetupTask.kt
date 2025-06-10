@@ -20,10 +20,6 @@ abstract class PythonSetupTask : SetupTask<PythonExtension>(
         const val NAME = "pythonSetup"
     }
 
-    override fun exec() {
-        super.exec()
-    }
-
     override fun initExtension(): PythonExtension {
         return ExtensionUtil.getOrCreate<PythonExtension>(project)
     }

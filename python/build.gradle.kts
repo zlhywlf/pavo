@@ -3,5 +3,4 @@ plugins {
 }
 
 pythonExtension {
-    download = true
 }

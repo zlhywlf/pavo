@@ -3,5 +3,4 @@ plugins {
 }
 
 nodeExtension {
-    download = true
 }

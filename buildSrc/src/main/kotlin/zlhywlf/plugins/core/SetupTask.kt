@@ -60,6 +60,5 @@ abstract class SetupTask<E : BaseExtension>(
         gradleHelper.delete {
             delete(ext.sdkDir.get())
         }
-        println(archiveFile.get())
     }
 }
