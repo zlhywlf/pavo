@@ -44,9 +44,9 @@ abstract class SetupTask<E : BaseExtension>(
                 }
             }
         }
-        val pythonExt = if (ext.platform.get().isWindows()) extName.first else extName.second
+        val fileExt = if (ext.platform.get().isWindows()) extName.first else extName.second
         val depNameProvider =
-            ext.version.map { v -> "$groupName:$artifactName:$v:${classifierName(ext.platform.get())}@$pythonExt" }
+            ext.version.map { v -> "$groupName:$artifactName:$v:${classifierName(ext.platform.get())}@$fileExt" }
         val archiveFileProvider = depNameProvider.map {
             val dep = project.dependencies.create(it)
             val configuration = project.configurations.detachedConfiguration(dep)

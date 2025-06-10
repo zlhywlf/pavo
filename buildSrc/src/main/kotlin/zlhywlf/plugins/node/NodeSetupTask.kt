@@ -21,6 +21,16 @@ abstract class NodeSetupTask : SetupTask<NodeExtension>(
 
     override fun exec() {
         super.exec()
+        val af = archiveFile.get().asFile
+        val nodeDir = ext.sdkDir
+        val nodeBinDir = if (ext.platform.get().isWindows()) nodeDir else nodeDir.map { it.dir("bin") }
+        val archivePath = nodeBinDir.map { it.dir("../") }
+        if (af.name.endsWith("zip")) {
+            gradleHelper.copy {
+                from(gradleHelper.zipTree(af))
+                into(archivePath)
+            }
+        }
     }
 
     override fun initExtension(): NodeExtension {
